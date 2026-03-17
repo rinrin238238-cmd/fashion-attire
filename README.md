@@ -57,3 +57,36 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## ER図
+```mermaid
+erDiagram
+    users ||--o{ contacts : "manages"
+    categories ||--o{ contacts : "belongs to"
+
+    users {
+        unsigned_bigint id PK
+        string name
+        string email
+        string password
+        timestamp created_at
+    }
+
+    contacts {
+        unsigned_bigint id PK
+        unsigned_bigint category_id FK
+        string first_name
+        string last_name
+        integer gender
+        string email
+        string tell
+        string address
+        string building
+        text detail
+        timestamp created_at
+    }
+
+    categories {
+        unsigned_bigint id PK
+        string content
+        timestamp created_at
+    }
