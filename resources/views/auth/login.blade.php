@@ -118,7 +118,7 @@
 <body>
     <header class="header">
         <h1 class="logo">FashionablyLate</h1>
-        <a href="/register" class="header-link">register</a>
+        <a href="/register" class="header-link">Register</a>
     </header>
 
     <div class="container">
