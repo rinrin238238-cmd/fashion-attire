@@ -6,17 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FashionablyLate - Login</title>
     <style>
-        /* 背景色は正解画像通りの薄いベージュ */
         body {
             background-color: #f2eee9;
             color: #8b7969;
-            /* ベースの書体は上品な明朝体 */
-            font-family: "Times New Roman", "Shippori Mincho", "Hiragino Mincho ProN", serif;
+            font-family: "Times New Roman", serif;
             margin: 0;
-            padding: 0;
         }
 
-        /* ヘッダー部分は白背景 */
         .header {
             background-color: #ffffff;
             width: 100%;
@@ -28,12 +24,11 @@
 
         .logo {
             font-size: 30px;
-            font-weight: normal;
             letter-spacing: 3px;
             margin: 0;
+            font-weight: normal;
         }
 
-        /* 右上の register ボタン */
         .header-link {
             position: absolute;
             right: 50px;
@@ -44,7 +39,6 @@
             text-decoration: none;
             color: #bfa694;
             font-size: 14px;
-            font-family: sans-serif;
         }
 
         .container {
@@ -57,18 +51,16 @@
         .page-title {
             font-size: 26px;
             margin-bottom: 40px;
-            font-weight: normal;
             letter-spacing: 2px;
+            font-weight: normal;
         }
 
-        /* 中央の白い入力エリア */
         .auth-card {
             background-color: #ffffff;
             width: 550px;
             margin: 0 auto;
             padding: 60px 50px;
             box-sizing: border-box;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .form-group {
@@ -76,13 +68,12 @@
             margin-bottom: 25px;
         }
 
-        /* ラベルと入力欄はゴシック体へ切り替え */
         .label {
             display: block;
             margin-bottom: 10px;
             font-size: 16px;
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
-            color: #8b7969;
+            /* ラベルもゴシック体にするのが一般的 */
+            font-family: "Helvetica Neue", Arial, sans-serif;
         }
 
         input {
@@ -91,11 +82,9 @@
             border: none;
             background-color: #f4f4f4;
             box-sizing: border-box;
-            font-size: 14px;
-            font-family: sans-serif;
+            color: #5b4636;
         }
 
-        /* ログインボタン（正解画像通りの色味） */
         .btn-submit {
             margin-top: 30px;
             width: 120px;
@@ -104,13 +93,23 @@
             color: #ffffff;
             border: none;
             cursor: pointer;
-            font-size: 14px;
-            letter-spacing: 1px;
-            font-family: sans-serif;
+            font-size: 16px;
         }
 
-        .btn-submit:hover {
-            opacity: 0.8;
+        /* 規定のエラーメッセージ用スタイル */
+        .error-message {
+            color: #ff0000;
+            font-size: 13px;
+            margin-top: 5px;
+            /* 必須：ゴシック体指定 */
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+            font-weight: bold;
+        }
+
+        /* 認証失敗エラー用の特別な枠（お好みで調整） */
+        .login-error-wrapper {
+            margin-bottom: 20px;
+            text-align: center;
         }
     </style>
 </head>
@@ -118,23 +117,39 @@
 <body>
     <header class="header">
         <h1 class="logo">FashionablyLate</h1>
-        <a href="/register" class="header-link">Register</a>
+        <a href="/register" class="header-link">register</a>
     </header>
-
     <div class="container">
         <h2 class="page-title">Login</h2>
         <div class="auth-card">
+
+            @error('login_error')
+                <div class="login-error-wrapper">
+                    <p class="error-message">{{ $message }}</p>
+                </div>
+            @enderror
+
             <form action="/login" method="post">
                 @csrf
                 <div class="form-group">
                     <span class="label">メールアドレス</span>
-                    <input type="email" name="email" placeholder="例: test@example.com" value="{{ old('email') }}">
+                    <input type="text" name="email" placeholder="例: test@example.com" value="{{ old('email') }}">
+                    @error('email')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
+
                 <div class="form-group">
                     <span class="label">パスワード</span>
                     <input type="password" name="password" placeholder="例: coachtech1106">
+                    @error('password')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
-                <button type="submit" class="btn-submit">ログイン</button>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn-submit">ログイン</button>
+                </div>
             </form>
         </div>
     </div>

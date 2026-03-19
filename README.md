@@ -57,6 +57,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<<<<<<< HEAD
 ## ER図
 ```mermaid
 erDiagram
@@ -90,3 +91,14 @@ erDiagram
         string content
         timestamp created_at
     }
+=======
+
+## 環境構築手順
+
+1. `git clone` でリポジトリをローカルにコピー
+2. `.env.example` をコピーして `.env` を作成
+3. `composer install` を実行
+4. `php artisan key:generate` を実行
+5. `php artisan migrate --seed` を実行（初期データの投入）
+6. `php artisan serve` でサーバー起動
+>>>>>>> 55b8622 (fix: READMEの環境構築手順についても確認・修正)

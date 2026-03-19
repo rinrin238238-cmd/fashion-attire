@@ -141,9 +141,8 @@
                     <th>電話番号</th>
                     <td>
                         {{ $contact['tel_1'] }}{{ $contact['tel_2'] }}{{ $contact['tel_3'] }}
-                        <input type="hidden" name="tel_1" value="{{ $contact['tel_1'] }}">
-                        <input type="hidden" name="tel_2" value="{{ $contact['tel_2'] }}">
-                        <input type="hidden" name="tel_3" value="{{ $contact['tel_3'] }}">
+                        <input type="hidden" name="tell"
+                            value="{{ $contact['tel_1'] }}{{ $contact['tel_2'] }}{{ $contact['tel_3'] }}">
                     </td>
                 </tr>
                 <tr>
