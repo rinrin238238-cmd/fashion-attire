@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FashionablyLate</title>
     <style>
+        /* 指示書に忠実なフォントと色使い */
         body {
             background-color: #ffffff;
-            color: #5b4636;
+            color: #8b7969;
+            /* 全体的に茶色系の文字色 */
             font-family: "Times New Roman", "Shippori Mincho", serif;
             margin: 0;
             padding: 0;
@@ -26,6 +28,7 @@
             letter-spacing: 2px;
             margin: 0;
             font-weight: normal;
+            color: #8b7969;
         }
 
         .container {
@@ -47,59 +50,63 @@
             margin: 0 auto;
         }
 
-        /* レイアウトの肝：テーブル風の構造 */
+        /* フレックスボックスでラベルと入力を綺麗に整列 */
         .form-group {
             display: flex;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            /* 項目間の余白を少し広めに */
             align-items: flex-start;
-            /* 上揃え */
         }
 
         .label-column {
-            width: 200px;
-            /* 左側のラベル幅を固定 */
-            padding-top: 10px;
+            width: 250px;
+            /* 指示書のバランスに合わせて幅を調整 */
+            padding-top: 12px;
             font-size: 16px;
+            font-weight: bold;
         }
 
         .input-column {
             flex: 1;
-            /* 残りの幅をすべて使う */
         }
 
         .required {
-            color: #ff0000;
+            color: #ff4d4d;
+            /* 鮮やかな赤 */
             margin-left: 5px;
         }
 
-        /* 入力欄のスタイル */
+        /* 入力欄の共通スタイル */
         input,
         select,
         textarea {
             width: 100%;
             padding: 12px 15px;
-            border: none;
+            border: 1px solid #e0dfde;
+            /* 薄い境界線 */
             background-color: #f4f4f4;
             box-sizing: border-box;
             font-size: 15px;
             color: #5b4636;
         }
 
+        /* 名前と電話番号の横並び調整 */
         .name-wrapper,
         .tel-wrapper {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             align-items: center;
         }
 
-        .tel-input {
+        .name-wrapper input,
+        .tel-wrapper input {
             flex: 1;
         }
 
-        /* 性別ラジオボタン */
+        /* 性別ラジオボタンのデザイン */
         .gender-wrapper {
             display: flex;
-            gap: 20px;
+            gap: 30px;
             padding: 10px 0;
         }
 
@@ -107,37 +114,44 @@
             display: flex;
             align-items: center;
             cursor: pointer;
+            color: #5b4636;
         }
 
         input[type="radio"] {
             width: auto;
-            margin-right: 8px;
+            margin-right: 10px;
             accent-color: #8b7969;
+            /* ラジオボタンの色を茶色に */
         }
 
-        /* エラーメッセージ（ゴシック体） */
+        /* エラーメッセージ（指示書に合わせて目立つように） */
         .error-message {
-            color: #ff0000;
-            font-size: 13px;
-            margin-top: 5px;
-            font-family: "Helvetica Neue", Arial, sans-serif;
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: 8px;
+            font-family: sans-serif;
+            /* エラーは読みやすさ優先 */
             font-weight: bold;
         }
 
-        /* 確認ボタン */
         .btn-wrapper {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 60px;
         }
 
         .btn-confirm {
             background-color: #8b7969;
             color: #ffffff;
             border: none;
-            padding: 15px 60px;
+            padding: 15px 80px;
             font-size: 16px;
             cursor: pointer;
             letter-spacing: 1px;
+            transition: opacity 0.3s;
+        }
+
+        .btn-confirm:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -152,6 +166,7 @@
 
         <form action="/confirm" method="post">
             @csrf
+
             <div class="form-group">
                 <div class="label-column">お名前<span class="required">※</span></div>
                 <div class="input-column">
@@ -199,9 +214,9 @@
                 <div class="label-column">電話番号<span class="required">※</span></div>
                 <div class="input-column">
                     <div class="tel-wrapper">
-                        <input type="text" name="tel_1" value="{{ old('tel_1') }}"> -
-                        <input type="text" name="tel_2" value="{{ old('tel_2') }}"> -
-                        <input type="text" name="tel_3" value="{{ old('tel_3') }}">
+                        <input type="text" name="tel_1" value="{{ old('tel_1') }}" placeholder="080"> -
+                        <input type="text" name="tel_2" value="{{ old('tel_2') }}" placeholder="1234"> -
+                        <input type="text" name="tel_3" value="{{ old('tel_3') }}" placeholder="5678">
                     </div>
                     @if ($errors->has('tel_1') || $errors->has('tel_2') || $errors->has('tel_3') || $errors->has('tell'))
                         <p class="error-message">
@@ -209,60 +224,57 @@
                         </p>
                     @endif
                 </div>
-                @error('tell')
-                    <p class="error-message">{{ $message }}</p>
-                @enderror
             </div>
-    </div>
 
-    <div class="form-group">
-        <div class="label-column">住所<span class="required">※</span></div>
-        <div class="input-column">
-            <input type="text" name="address" value="{{ old('address') }}" placeholder="例: 東京都渋谷区千駄ヶ谷1-2-3">
-            @error('address')
-                <p class="error-message">{{ $message }}</p>
-            @enderror
-        </div>
-    </div>
+            <div class="form-group">
+                <div class="label-column">住所<span class="required">※</span></div>
+                <div class="input-column">
+                    <input type="text" name="address" value="{{ old('address') }}" placeholder="例: 東京都渋谷区千駄ヶ谷1-2-3">
+                    @error('address')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
 
-    <div class="form-group">
-        <div class="label-column">建物名</div>
-        <div class="input-column">
-            <input type="text" name="building" value="{{ old('building') }}" placeholder="例: 千駄ヶ谷マンション101">
-        </div>
-    </div>
+            <div class="form-group">
+                <div class="label-column">建物名</div>
+                <div class="input-column">
+                    <input type="text" name="building" value="{{ old('building') }}" placeholder="例: 千駄ヶ谷マンション101">
+                </div>
+            </div>
 
-    <div class="form-group">
-        <div class="label-column">お問い合わせの種類<span class="required">※</span></div>
-        <div class="input-column">
-            <select name="category_id">
-                <option value="">選択してください</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                        {{ $category->content }}
-                    </option>
-                @endforeach
-            </select>
-            @error('category_id')
-                <p class="error-message">{{ $message }}</p>
-            @enderror
-        </div>
-    </div>
+            <div class="form-group">
+                <div class="label-column">お問い合わせの種類<span class="required">※</span></div>
+                <div class="input-column">
+                    <select name="category_id">
+                        <option value="">選択してください</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->content }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
 
-    <div class="form-group">
-        <div class="label-column">お問い合わせ内容<span class="required">※</span></div>
-        <div class="input-column">
-            <textarea name="detail" rows="5" placeholder="お問い合わせ内容をご記載ください">{{ old('detail') }}</textarea>
-            @error('detail')
-                <p class="error-message">{{ $message }}</p>
-            @enderror
-        </div>
-    </div>
+            <div class="form-group">
+                <div class="label-column">お問い合わせ内容<span class="required">※</span></div>
+                <div class="input-column">
+                    <textarea name="detail" rows="5" placeholder="お問い合わせ内容をご記載ください">{{ old('detail') }}</textarea>
+                    @error('detail')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
 
-    <div class="btn-wrapper">
-        <button type="submit" class="btn-confirm">確認画面へ</button>
-    </div>
-    </form>
+            <div class="btn-wrapper">
+                <button type="submit" class="btn-confirm">確認画面へ</button>
+            </div>
+        </form>
     </div>
 </body>
 
