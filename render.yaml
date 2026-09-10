@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: fashion-attire-web
+    env: docker
+    plan: free
+    region: singapore
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: fashion-attire-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: fashion-attire-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: fashion-attire-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: fashion-attire-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: fashion-attire-db
+          property: password
+
+databases:
+  - name: fashion-attire-db
+    plan: free
+    region: singapore
